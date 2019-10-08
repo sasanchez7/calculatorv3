@@ -3,11 +3,128 @@ using System;
 using System.IO; // to use StreamWriter
 using System.Net; // to use HttpWebRequest
 using client.Models;
+using System.Collections.Generic;
 
 namespace client
 {
     public class Client
     {
+        public static string askForValue()
+        {
+            Console.WriteLine("Enter the number that you want:");
+            return Console.ReadLine();
+        }
+        public static double[] askForJustTwoValues()
+        {
+            double[] twoValues = new double[2];
+            for (int i = 0; i < 2; i++)
+            {
+                bool fail;
+                do
+                {
+                    Console.WriteLine("Enter the parameter number {0}:", i + 1);
+                    string numberStr = Console.ReadLine();
+                    double number;
+                    if (Double.TryParse(numberStr, out number))
+                    {
+                        // Console.WriteLine("'{0}' --> {1}", numberStr, number);
+                        fail = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unable to parse '{0}'.", numberStr);
+                        fail = true;
+                    }
+                } while (fail == true);
+            }
+            Console.WriteLine("\nCalculating, wait a second please\n");
+            return twoValues;
+        }
+        public static List<double> askForTwoOrMoreValues()
+        {
+            bool fail;
+            double number;
+            List<double> values = new List<double>();
+
+            Console.WriteLine("\nREMINDER: Enter 0 to stop adding parameters and calculate\n");
+            do
+            {
+                Console.WriteLine("Enter parameters that you want to calculate: ");
+                string numberStr = Console.ReadLine();
+
+                if (Double.TryParse(numberStr, out number) && number != 0)
+                {
+                    // Console.WriteLine("'{0}' --> {1}", numberStr, number);
+                    fail = false;
+                    values.Add(number);
+                }
+                else
+                {
+                    Console.WriteLine("Unable to parse '{0}'.", numberStr);
+                    fail = true;
+                }
+            } while (fail == true || number == 0 && values.Capacity >= 2);
+            Console.WriteLine("\nCalculating, wait a second please\n");
+            return values;
+        }
+
+        public static void addition()
+        {
+            Console.Clear();
+            Console.WriteLine("ADDITION");
+
+            List<double> valuesList = askForTwoOrMoreValues();
+            double[] values = new double[valuesList.Capacity];
+            int i = 0;
+            foreach (int value in valuesList)
+            {
+                values[++i] = value;
+            }
+            addRequest(new AddRequest(values));
+        }
+        public static void substraction()
+        {
+            Console.Clear();
+            Console.WriteLine("SUBSTRACTION");
+            Double[] values = askForJustTwoValues();
+            subRequest(new SubRequest(values[0], values[1]));
+        }
+        public static void multiplication()
+        {
+            Console.Clear();
+            Console.WriteLine("MULTIPLICATION");
+            List<double> valuesList = askForTwoOrMoreValues();
+            double[] values = new double[valuesList.Capacity];
+            int i = 0;
+            foreach (int value in valuesList)
+            {
+                values[++i] = value;
+            }
+            multRequest(new MultRequest(values));
+
+        }
+        public static void division()
+        {
+            Console.Clear();
+            Console.WriteLine("DIVISION");
+            Double[] values = askForJustTwoValues();
+            divRequest(new DivRequest(values[0], values[1]));
+
+        }
+        public static void squareRoot()
+        {
+            Console.Clear();
+            Console.WriteLine("SQUARE ROOT");
+            double number;
+            string numberStr;
+            do
+            {
+                numberStr = askForValue();
+            } while (!Double.TryParse(numberStr, out number) && number == 0);
+            Console.WriteLine("\nCalculating, wait a second please\n");
+            sqrtRequest(new SqrtRequest(number));
+        }
+
         /// <summary>
         /// This method recieves 2 parameters to create an http request  
         /// </summary>
@@ -25,7 +142,6 @@ namespace client
         /// </summary>
         public static HttpWebRequest headerBuilder(string controller, string action, int id = -1)
         {
-            // var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55555/Calculator/"+action);
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55555/" + controller + "/" + action);
             httpWebRequest.ProtocolVersion = HttpVersion.Version11; // could fail
             httpWebRequest.ContentType = "application/json";
@@ -59,7 +175,8 @@ namespace client
                     response = JsonConvert.DeserializeObject<AddResponse>(result);
                 }
 
-                Console.WriteLine("Sum: " + response.Sum);
+                Console.WriteLine("Sum: " + response.Sum + "\n press two times enter if you wont to continue.");
+                Console.ReadKey();
             }
             // handle error exceptions
             catch (WebException webex)
@@ -97,7 +214,8 @@ namespace client
                     response = JsonConvert.DeserializeObject<MultResponse>(result);
                 }
 
-                Console.WriteLine("Product: " + response.Product);
+                Console.WriteLine("Product: " + response.Product + "\n press two times enter if you wont to continue.");
+                Console.ReadKey();
             }
             // handle error exceptions
             catch (WebException webex)
@@ -139,7 +257,8 @@ namespace client
                 }
 
                 // change
-                Console.WriteLine("Difference: " + response.Difference);
+                Console.WriteLine("Difference: " + response.Difference + "\n press two times enter if you wont to continue.");
+                Console.ReadKey();
             }
             // handle error exceptions
             catch (WebException webex)
@@ -177,7 +296,9 @@ namespace client
                     response = JsonConvert.DeserializeObject<DivResponse>(result);
                 }
 
-                Console.WriteLine("Quotient: {0} Remainder: {1}", response.Quotient, response.Remainder);
+                Console.WriteLine("Quotient: {0} Remainder: {1}", response.Quotient, response.Remainder + "\n press two times enter if you wont to continue.");
+                Console.ReadKey();
+
             }
             // handle error exceptions
             catch (WebException webex)
@@ -215,7 +336,8 @@ namespace client
                     response = JsonConvert.DeserializeObject<SqrtResponse>(result);
                 }
 
-                Console.WriteLine("Square: {0}", response.Square);
+                Console.WriteLine("Square: {0}", response.Square + "\n press two times enter if you wont to continue.");
+                Console.ReadKey();
             }
             // handle error exceptions
             catch (WebException webex)
