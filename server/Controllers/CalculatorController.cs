@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc; // for implement : Controller
+﻿using System;
+using System.Web.Mvc; // for implement : Controller
+using System.Collections.Generic;
+using System.Linq;
 
 using Newtonsoft.Json;
 
@@ -45,8 +48,9 @@ namespace server.Controllers
         [ActionName("sub")]
         public string SubPost(SubRequest calc)
         {
-            SubResponse response = server.Server.SubtractingCalculation(calc.Minuend, calc.substrahend);
-            return JsonConvert.SerializeObject(response);
+            IEnumerable<SubResponse> someCollection = server.Server.SubtractingCalculation(calc.Minuend, calc.substrahend);
+            var list = someCollection.Cast<SubResponse>().ToList();
+            return JsonConvert.SerializeObject(list[0]);
         }
 
         // POST: Calculator/div
@@ -56,8 +60,8 @@ namespace server.Controllers
         [ActionName("div")]
         public string DivPost(DivRequest calc)
         {
-            DivResponse response = server.Server.DividingCalculation(calc.Dividend, calc.Divisor);
-            return JsonConvert.SerializeObject(response);
+            var response = server.Server.DividingCalculation(calc.Dividend, calc.Divisor);
+            return JsonConvert.SerializeObject(response.Item1);
         }
 
         // POST: Calculator/sqrt

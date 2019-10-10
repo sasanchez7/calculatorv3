@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Web;
 using System.Collections.Generic;
 
 using server.Models;
@@ -29,14 +27,18 @@ namespace server
             return new MultResponse(total);
         }
 
-        public static SubResponse SubtractingCalculation(double minuend, double substrahend)
+        public static IEnumerable<SubResponse> SubtractingCalculation(double minuend, double substrahend)
         {
-            return new SubResponse(minuend - substrahend);
+            var e2 = new List<SubResponse>();
+            e2.Add(new SubResponse(minuend - substrahend));
+            // you can add as much as you want
+            //e2.Add(new SubResponse(minuend - substrahend));
+            return e2;
         }
 
-        public static DivResponse DividingCalculation(double dividend, double divisor)
+        public static Tuple<DivResponse> DividingCalculation(double dividend, double divisor)
         {
-            return new DivResponse(dividend / divisor, dividend % divisor);
+            return Tuple.Create(new DivResponse(dividend / divisor, dividend % divisor));
         }
 
         public static SqrtResponse SquareRooCalculation(double number)
