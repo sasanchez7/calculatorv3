@@ -1,50 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Collections.Generic;
+
+using server.Models;
 
 namespace server
 {
     public class Server
     {
-        public static double addOrSumCalc(string operation, double[] values)
+        public static AddResponse AddingCalculation(double[] values)
         {
-            double result = 0;
-            switch (operation)
+            double total = 0;
+            for (var i = 0; i < values.Length; i++)
             {
-                case "add":
-                    for (var i = 0; i < values.Length; i++)
-                    {
-                        result += values[i];
-                    }
-                    return result;
-                case "mult":
-                    result = 1;
-                    for (var i = 0; i < values.Length; i++)
-                    {
-                        result = result * values[i];
-                    }
-                    return result;
+                total += values[i];
             }
-            return -1;
+            return new AddResponse(total);
         }
 
-        public static double subCalc(double minuend, double substrahend)
+        public static MultResponse MultiplyingCalculation(double[] values)
         {
-            return minuend - substrahend;
+            double total = 1;
+            for (var i = 0; i < values.Length; i++)
+            {
+                total = total * values[i];
+            }
+            return new MultResponse(total);
         }
 
-        public static double[] divCalc(double dividend, double divisor)
+        public static SubResponse SubtractingCalculation(double minuend, double substrahend)
         {
-            return new double[] { dividend / divisor, dividend % divisor };
+            return new SubResponse(minuend - substrahend);
         }
 
-        public static double sqrtCalc(double number)
+        public static DivResponse DividingCalculation(double dividend, double divisor)
         {
-            return Math.Sqrt(number);
+            return new DivResponse(dividend / divisor, dividend % divisor);
         }
 
-        public static string[] getOperationsById(int id)
+        public static SqrtResponse SquareRooCalculation(double number)
+        {
+            return new SqrtResponse(Math.Sqrt(number));
+        }
+
+        public static string[] GetOperationsById(int id)
         {
             return new string[] { "dsf", "dfgs" };
         }

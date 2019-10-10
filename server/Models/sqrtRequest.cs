@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace server.Models
+﻿namespace server.Models
 {
     public class SqrtRequest
     {

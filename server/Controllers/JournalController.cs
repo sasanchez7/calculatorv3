@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
-using server.Models;
+
 using Newtonsoft.Json;
+
+using server.Models;
 
 namespace server.Controllers
 {
@@ -11,10 +13,10 @@ namespace server.Controllers
         [Route("Journalr/query")]
         [HttpPost]
         [ActionName("query")]
-        public string queryPost(QueryRequest calc)
+        public string QueryPost(QueryRequest calc)
         {
             var response = new QueryResponse();
-            //string[][] array = server.Server.getOperationsById(calc.Id);
+            //string[][] array = server.Server.GetOperationsById(calc.Id);
             //response.Quotient = array[0];
             //response.Remainder = array[1];
             return JsonConvert.SerializeObject(response);

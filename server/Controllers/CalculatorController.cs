@@ -1,8 +1,8 @@
 ﻿using System.Web.Mvc; // for implement : Controller
-using server.Models; // UC_CALC_SUB
-using Newtonsoft.Json; // JSON ser/des
-using System.Linq;
-using System;
+
+using Newtonsoft.Json;
+
+using server.Models;
 
 namespace server.Controllers
 {
@@ -10,7 +10,7 @@ namespace server.Controllers
     {
         // POST: calculator/add
         [HttpGet]
-        public string add()
+        public string Add()
         {
             return "<h1>add get</h1>";
         }
@@ -20,11 +20,10 @@ namespace server.Controllers
         [Route("calculator/add")]
         [HttpPost]
         [ActionName("add")]
-        public string addPost(AddRequest calc)
+        public string AddPost(AddRequest calc)
         {
             // var total = calc.Addens.Sum();
-            var response = new AddResponse();
-            response.Sum = server.Server.addOrSumCalc("add", calc.Addens);
+            AddResponse response = server.Server.AddingCalculation(calc.Addens);
             return JsonConvert.SerializeObject(response);
         }
 
@@ -33,10 +32,9 @@ namespace server.Controllers
         [Route("calculator/mult")]
         [HttpPost]
         [ActionName("mult")]
-        public string multPost(MultRequest calc)
+        public string MultPost(MultRequest calc)
         {
-            var response = new MultResponse();
-            response.Product = server.Server.addOrSumCalc("mult", calc.Factors);
+            MultResponse response = server.Server.MultiplyingCalculation(calc.Factors);
             return JsonConvert.SerializeObject(response);
         }
 
@@ -45,10 +43,9 @@ namespace server.Controllers
         [Route("calculator/sub")]
         [HttpPost]
         [ActionName("sub")]
-        public string subPost(SubRequest calc)
+        public string SubPost(SubRequest calc)
         {
-            var response = new SubResponse();
-            response.Difference = server.Server.subCalc(calc.Minuend, calc.substrahend);
+            SubResponse response = server.Server.SubtractingCalculation(calc.Minuend, calc.substrahend);
             return JsonConvert.SerializeObject(response);
         }
 
@@ -57,12 +54,9 @@ namespace server.Controllers
         [Route("calculator/div")]
         [HttpPost]
         [ActionName("div")]
-        public string divPost(DivRequest calc)
+        public string DivPost(DivRequest calc)
         {
-            var response = new DivResponse();
-            double[] array = server.Server.divCalc(calc.Dividend, calc.Divisor);
-            response.Quotient = array[0];
-            response.Remainder = array[1];
+            DivResponse response = server.Server.DividingCalculation(calc.Dividend, calc.Divisor);
             return JsonConvert.SerializeObject(response);
         }
 
@@ -71,10 +65,9 @@ namespace server.Controllers
         [Route("calculator/sqrt")]
         [HttpPost]
         [ActionName("sqrt")]
-        public string sqrtPost(SqrtRequest calc)
+        public string SqrtPost(SqrtRequest calc)
         {
-            var response = new SqrtResponse();
-            response.Square = server.Server.sqrtCalc(calc.Number);
+            SqrtResponse response = server.Server.SquareRooCalculation(calc.Number);
             return JsonConvert.SerializeObject(response);
         }
 

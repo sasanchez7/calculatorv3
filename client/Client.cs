@@ -1,20 +1,22 @@
-﻿using Newtonsoft.Json;// to use Json parse
-using System;
-using System.IO; // to use StreamWriter
+﻿using System;
+using System.IO;
 using System.Net; // to use HttpWebRequest
-using client.Models;
 using System.Collections.Generic;
+
+using Newtonsoft.Json;
+
+using client.Models;
 
 namespace client
 {
     public class Client
     {
-        public static string askForValue()
+        public static string AskForValue()
         {
-            Console.WriteLine("Enter the number that you want:");
+            Console.Write("Enter the number that you want:");
             return Console.ReadLine();
         }
-        public static double[] askForJustTwoValues()
+        public static double[] AskForJustTwoValues()
         {
             double[] twoValues = new double[2];
             for (int i = 0; i < 2; i++)
@@ -22,13 +24,21 @@ namespace client
                 bool fail;
                 do
                 {
-                    Console.WriteLine("Enter the parameter number {0}:", i + 1);
+                    fail = false;
+                    Console.Write("Enter the parameter number {0}:", i + 1);
                     string numberStr = Console.ReadLine();
                     double number;
                     if (Double.TryParse(numberStr, out number))
                     {
                         // Console.WriteLine("'{0}' --> {1}", numberStr, number);
-                        fail = false;
+                        if (number > 0)
+                        {
+                            twoValues[i] = number;
+                        }
+                        if (number == 0 && twoValues.Length >= 1)
+                        {
+                            break;
+                        }
                     }
                     else
                     {
@@ -40,7 +50,7 @@ namespace client
             Console.WriteLine("\nCalculating, wait a second please\n");
             return twoValues;
         }
-        public static List<double> askForTwoOrMoreValues()
+        public static List<double> AskForTwoOrMoreValues()
         {
             bool fail;
             double number;
@@ -49,69 +59,83 @@ namespace client
             Console.WriteLine("\nREMINDER: Enter 0 to stop adding parameters and calculate\n");
             do
             {
-                Console.WriteLine("Enter parameters that you want to calculate: ");
+                fail = false;
+                Console.Write("Enter parameters that you want to calculate: ");
                 string numberStr = Console.ReadLine();
+                // string numberStr = "5";
 
-                if (Double.TryParse(numberStr, out number) && number != 0)
+                if (Double.TryParse(numberStr, out number))
                 {
                     // Console.WriteLine("'{0}' --> {1}", numberStr, number);
                     fail = false;
-                    values.Add(number);
+                    if (number > 0)
+                    {
+                        values.Add(number);
+                    }
+                    else
+                    {
+                        fail = true;
+                    }
+                    if (number == 0 && values.Count >= 2)
+                    {
+                        break;
+                    }
                 }
                 else
                 {
                     Console.WriteLine("Unable to parse '{0}'.", numberStr);
                     fail = true;
                 }
-            } while (fail == true || number == 0 && values.Capacity >= 2);
+
+            } while (fail == true || number > 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
             return values;
         }
 
-        public static void addition()
+        public static void Addition()
         {
             Console.Clear();
             Console.WriteLine("ADDITION");
 
-            List<double> valuesList = askForTwoOrMoreValues();
+            List<double> valuesList = AskForTwoOrMoreValues();
             double[] values = new double[valuesList.Capacity];
             int i = 0;
             foreach (int value in valuesList)
             {
-                values[++i] = value;
+                values[i++] = value;
             }
-            addRequest(new AddRequest(values));
+            AdditionPetition(new AddRequest(values));
         }
-        public static void substraction()
+        public static void Substraction()
         {
             Console.Clear();
             Console.WriteLine("SUBSTRACTION");
-            Double[] values = askForJustTwoValues();
-            subRequest(new SubRequest(values[0], values[1]));
+            Double[] values = AskForJustTwoValues();
+            SubtractionPetition(new SubRequest(values[0], values[1]));
         }
-        public static void multiplication()
+        public static void Multiplication()
         {
             Console.Clear();
             Console.WriteLine("MULTIPLICATION");
-            List<double> valuesList = askForTwoOrMoreValues();
-            double[] values = new double[valuesList.Capacity];
+            List<double> valuesList = AskForTwoOrMoreValues();
+            double[] values = new double[valuesList.Count];
             int i = 0;
             foreach (int value in valuesList)
             {
-                values[++i] = value;
+                values[i++] = value;
             }
-            multRequest(new MultRequest(values));
+            MultiplicationPetition(new MultRequest(values));
 
         }
-        public static void division()
+        public static void Division()
         {
             Console.Clear();
             Console.WriteLine("DIVISION");
-            Double[] values = askForJustTwoValues();
-            divRequest(new DivRequest(values[0], values[1]));
+            Double[] values = AskForJustTwoValues();
+            DivisionPetition(new DivRequest(values[0], values[1]));
 
         }
-        public static void squareRoot()
+        public static void SquareRoot()
         {
             Console.Clear();
             Console.WriteLine("SQUARE ROOT");
@@ -119,16 +143,16 @@ namespace client
             string numberStr;
             do
             {
-                numberStr = askForValue();
+                numberStr = AskForValue();
             } while (!Double.TryParse(numberStr, out number) && number == 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
-            sqrtRequest(new SqrtRequest(number));
+            SquareRootPetition(new SqrtRequest(number));
         }
 
         /// <summary>
         /// This method recieves 2 parameters to create an http request  
         /// </summary>
-        public static void sendRequest(HttpWebRequest httpWebRequest, string ObjSerialized)
+        public static void SendRequest(HttpWebRequest httpWebRequest, string ObjSerialized)
         {
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
@@ -140,7 +164,7 @@ namespace client
         /// <summary>
         /// This method recieves 2 parameters to build a http header 
         /// </summary>
-        public static HttpWebRequest headerBuilder(string controller, string action, int id = -1)
+        public static HttpWebRequest HeaderBuilder(string controller, string action, int id = -1)
         {
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55555/" + controller + "/" + action);
             httpWebRequest.ProtocolVersion = HttpVersion.Version11; // could fail
@@ -153,17 +177,17 @@ namespace client
             return httpWebRequest;
         }
 
-        #region method_add_Request
-        public static void addRequest(AddRequest calc, int id = -1)
+        #region method_AddingPetition
+        public static void AdditionPetition(AddRequest calc, int id = -1)
         {
             try
             {
-                var httpWebRequest = headerBuilder("Calculator", "add", id);
+                var httpWebRequest = HeaderBuilder("Calculator", "add", id);
 
                 string json = JsonConvert.SerializeObject(calc);
 
                 // send request
-                sendRequest(httpWebRequest, json);
+                SendRequest(httpWebRequest, json);
 
                 // get response from the server
                 AddResponse response = null;
@@ -175,7 +199,7 @@ namespace client
                     response = JsonConvert.DeserializeObject<AddResponse>(result);
                 }
 
-                Console.WriteLine("Sum: " + response.Sum + "\n press two times enter if you wont to continue.");
+                Console.WriteLine("Sum: " + response.Sum + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
             // handle error exceptions
@@ -192,17 +216,17 @@ namespace client
         }
         #endregion
 
-        #region method_mult_request
-        public static void multRequest(MultRequest calc, int id = -1)
+        #region method_MultiplicationPetition
+        public static void MultiplicationPetition(MultRequest calc, int id = -1)
         {
             try
             {
-                var httpWebRequest = headerBuilder("Calculator", "mult", id);
+                var httpWebRequest = HeaderBuilder("Calculator", "mult", id);
 
                 string json = JsonConvert.SerializeObject(calc);
 
                 // send request
-                sendRequest(httpWebRequest, json);
+                SendRequest(httpWebRequest, json);
 
                 // get response from the server
                 MultResponse response = null;
@@ -214,7 +238,7 @@ namespace client
                     response = JsonConvert.DeserializeObject<MultResponse>(result);
                 }
 
-                Console.WriteLine("Product: " + response.Product + "\n press two times enter if you wont to continue.");
+                Console.WriteLine("Product: " + response.Product + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
             // handle error exceptions
@@ -231,18 +255,18 @@ namespace client
         } // class
         #endregion
 
-        #region method_sub_request
-        public static void subRequest(SubRequest calc, int id = -1)
+        #region method_SubtractionPetition
+        public static void SubtractionPetition(SubRequest calc, int id = -1)
         {
             try
             {
                 // change
-                var httpWebRequest = headerBuilder("Calculator", "sub", id);
+                var httpWebRequest = HeaderBuilder("Calculator", "sub", id);
 
                 string json = JsonConvert.SerializeObject(calc);
 
                 // send request
-                sendRequest(httpWebRequest, json);
+                SendRequest(httpWebRequest, json);
 
                 // get response from the server
                 // change
@@ -257,7 +281,7 @@ namespace client
                 }
 
                 // change
-                Console.WriteLine("Difference: " + response.Difference + "\n press two times enter if you wont to continue.");
+                Console.WriteLine("Difference: " + response.Difference + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
             // handle error exceptions
@@ -274,17 +298,17 @@ namespace client
         } // class
         #endregion
 
-        #region method_div_request
-        public static void divRequest(DivRequest calc, int id = -1)
+        #region method_DivisionPetition
+        public static void DivisionPetition(DivRequest calc, int id = -1)
         {
             try
             {
-                var httpWebRequest = headerBuilder("Calculator", "div", id);
+                var httpWebRequest = HeaderBuilder("Calculator", "div", id);
 
                 string json = JsonConvert.SerializeObject(calc);
 
                 // send request
-                sendRequest(httpWebRequest, json);
+                SendRequest(httpWebRequest, json);
 
                 // get response from the server
                 DivResponse response = null;
@@ -296,7 +320,7 @@ namespace client
                     response = JsonConvert.DeserializeObject<DivResponse>(result);
                 }
 
-                Console.WriteLine("Quotient: {0} Remainder: {1}", response.Quotient, response.Remainder + "\n press two times enter if you wont to continue.");
+                Console.WriteLine("Quotient: {0} Remainder: {1}", response.Quotient, response.Remainder + "\n\npress enter to continue.");
                 Console.ReadKey();
 
             }
@@ -314,17 +338,17 @@ namespace client
         } // class
         #endregion
 
-        #region method_sqrt_request
-        public static void sqrtRequest(SqrtRequest calc, int id = -1)
+        #region method_SquareRootPetition
+        public static void SquareRootPetition(SqrtRequest calc, int id = -1)
         {
             try
             {
-                var httpWebRequest = headerBuilder("Calculator", "sqrt", id);
+                var httpWebRequest = HeaderBuilder("Calculator", "sqrt", id);
 
                 string json = JsonConvert.SerializeObject(calc);
 
                 // send request
-                sendRequest(httpWebRequest, json);
+                SendRequest(httpWebRequest, json);
 
                 // get response from the server
                 SqrtResponse response = null;
@@ -336,7 +360,7 @@ namespace client
                     response = JsonConvert.DeserializeObject<SqrtResponse>(result);
                 }
 
-                Console.WriteLine("Square: {0}", response.Square + "\n press two times enter if you wont to continue.");
+                Console.WriteLine("Square: {0}", response.Square + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
             // handle error exceptions
