@@ -96,7 +96,7 @@ namespace client
         {
             Console.Clear();
             Console.WriteLine("ADDITION");
-
+            /*
             List<double> valuesList = AskForTwoOrMoreValues();
             double[] values = new double[valuesList.Capacity];
             int i = 0;
@@ -104,7 +104,10 @@ namespace client
             {
                 values[i++] = value;
             }
-            AdditionPetition(new AddRequest(values));
+            AdditionPetition(new AddRequest(values), 1);
+            */
+            double[] values = { 5, 5, 5 };
+            AdditionPetition(new AddRequest(values), 1);
         }
         public static void Substraction()
         {

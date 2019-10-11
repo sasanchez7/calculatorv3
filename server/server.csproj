@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Data\" />
     <Folder Include="Views\Calculator\" />
     <Folder Include="Views\Journal\" />
   </ItemGroup>
@@ -202,6 +203,7 @@
     <Compile Include="Models\AddRequest.cs" />
     <Compile Include="Models\DivRequest.cs" />
     <Compile Include="Models\DivResponse.cs" />
+    <Compile Include="Models\Query.cs" />
     <Compile Include="Models\QueryRequest.cs" />
     <Compile Include="Models\QueryResponse.cs" />
     <Compile Include="Models\MultRequest.cs" />
@@ -211,7 +213,7 @@
     <Compile Include="Models\SubRequest.cs" />
     <Compile Include="Models\SubResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server.cs" />
+    <Compile Include="ServerCalc.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

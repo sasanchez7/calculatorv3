@@ -1,7 +1,10 @@
-﻿namespace server.Models
+﻿using System.Collections.Generic;
+
+namespace server.Models
 {
     public class QueryResponse
     {
-        public string[] Operations { get; set; }
+        public int Id { get; set; }
+        public IEnumerable<Query> Operations { get; set; }
     }
 }
