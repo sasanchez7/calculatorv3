@@ -117,6 +117,9 @@ namespace server
                 // serializas y escribes otra vez
             }
             // items[id].Operations = items[id].Operations + query;
+            List<Query> numberList = new List<Query>();
+            numberList.Add(items[id].Operations);
+            response2.Operations = response2.Operations + query;
 
             string json = JsonConvert.SerializeObject(items[id]);
             // check if file exist
