@@ -10,16 +10,20 @@ namespace server.Models
         public enum Operations
         {
             Unknown = 0,
-            Sum = 1,
+            Add = 1,
             Sub = 2,
             Div = 3,
             Mult = 4,
             Sqrt = 5
         }
 
-        private Operations Operation;
-        private string Calculation;
-        private DateTime Date;
+        public Operations Operation { get; set; }
+        public string Calculation { get; set; }
+        public DateTime Date { get; set; }
+
+        public Query()
+        {
+        }
 
         public Query(Operations Operation, string calculation, DateTime Date)
         {
@@ -27,5 +31,13 @@ namespace server.Models
             this.Calculation = calculation;
             this.Date = Date;
         }
+
+        public Query(Query query)
+        {
+            this.Operation = query.Operation;
+            this.Calculation = query.Calculation;
+            this.Date = query.Date;
+        }
+
     }
 }

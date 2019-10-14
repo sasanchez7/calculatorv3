@@ -8,97 +8,106 @@ namespace client
         {
             // if the program start, create a file
 
-            // sign up, sign in or guest 
+
 
             // what you want
             // add, sub, mult, div, sqrt, query, exit
-            int num = 0;
+            int num = -1;
+            int opt = 0;
             Console.Title = "CalculatorService by SrG";
             Console.WriteLine("Welcome and greetings \n");
             do
             {
-                //Console.Clear();
-
-                Console.WriteLine("What do you want to do?\n");
+                // sign up, sign in or guest 
+                Console.WriteLine("What you want to do?");
                 Console.WriteLine("0 - Exit");
-                Console.WriteLine("1 - Addition");
-                Console.WriteLine("2 - Substraction");
-                Console.WriteLine("3 - Multiplication");
-                Console.WriteLine("4 - Division");
-                Console.WriteLine("5 - square root\n");
-                // (int)(Console.ReadKey().KeyChar);
-
-                ConsoleKeyInfo UserInput = Console.ReadKey(); // Get user input
-                // We check input for a Digit
-                if (char.IsDigit(UserInput.KeyChar))
+                Console.WriteLine("1 - Sign up");
+                Console.WriteLine("2 - Sign in");
+                Console.WriteLine("3 - Sign as a guest");
+                do
                 {
-                    num = int.Parse(UserInput.KeyChar.ToString()); // use Parse if it's a Digit
-                    //if (num < 0 && 5 < num)
-                    //{
-                    //    Console.Error.WriteLine("\n\n ERROR! \num choose one of the following: \n\n");
-                    //}
-                }
-                /*else
-                {
-                    num = -1;
-                } */
-                Console.WriteLine("\nnKey vale {0}\n", num);
+                    //Console.Clear();
 
-                switch (num)
-                {
-                    //case 0:
-                    // i tried to kill the proccess to stop execution
-                    //    break;
-                    case 1:
-                        // ask for 2 or + double values
-                        Client.Addition();
-                        break;
-                    case 2:
-                        // ask just for 2 double values
-                        Client.Substraction();
-                        break;
-                    case 3:
-                        // ask for 2 or + double values
-                        Client.Multiplication();
-                        break;
-                    case 4:
-                        // ask just for 2 double values
-                        Client.Division();
-                        break;
-                    case 5:
-                        // ask just for 1 string value
-                        Client.SquareRoot();
-                        break;
-                    /*
-                    case 6:
-                        Console.WriteLine("Case 5 - square root"); // ask just for 1 value
-                        Client.squareRoot();
-                        break;
-                    */
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("\nPlease, introduce one of the following\n");
-                        break;
-                }
+                    Console.WriteLine("What do you want to do?\n");
+                    Console.WriteLine("0 - Exit");
+                    Console.WriteLine("1 - Addition");
+                    Console.WriteLine("2 - Substraction");
+                    Console.WriteLine("3 - Multiplication");
+                    Console.WriteLine("4 - Division");
+                    Console.WriteLine("5 - Square root");
+                    Console.WriteLine("6 - Journal query\n");
+                    // (int)(Console.ReadKey().KeyChar);
 
-            } while (num != 0);
+                    ConsoleKeyInfo UserInput = Console.ReadKey(); // Get user input
+                                                                  // We check input for a Digit
+                    if (char.IsDigit(UserInput.KeyChar))
+                    {
+                        opt = int.Parse(UserInput.KeyChar.ToString()); // use Parse if it's a Digit
+                                                                       //if (opt < 0 && 5 < opt)
+                                                                       //{
+                                                                       //    Console.Error.WriteLine("\n\n ERROR! \opt choose one of the following: \n\n");
+                                                                       //}
+                    }
+                    /*else
+                    {
+                        opt = -1;
+                    } */
+                    Console.WriteLine("\nnKey vale {0}\n", opt);
 
-            // if exit, destroy all id files
+                    switch (opt)
+                    {
+                        //case 0:
+                        // i tried to kill the proccess to stop execution
+                        //    break;
+                        case 1:
+                            // ask for 2 or + double values
+                            Client.Addition();
+                            break;
+                        case 2:
+                            // ask just for 2 double values
+                            Client.Substraction();
+                            break;
+                        case 3:
+                            // ask for 2 or + double values
+                            Client.Multiplication();
+                            break;
+                        case 4:
+                            // ask just for 2 double values
+                            Client.Division();
+                            break;
+                        case 5:
+                            // ask just for 1 double value
+                            Client.SquareRoot();
+                            break;
+                        case 6:
+                            // ask just for 1 int value
+                            Client.JournalQuery();
+                            break;
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("\nPlease, introduce one of the following\n");
+                            break;
+                    }
+
+                } while (opt != 0);
+            } while (num < -1 || num > 3);
+
+            // if exit, destroy all num files
         }
         static void Main(string[] args)
         {
             MainMenu();
             /*
-            int num = 0;
+            int opt = 0;
             do
             {
                 Console.WriteLine("Introduce numero \n");
-                num = (int)(Console.ReadKey().KeyChar);
-                Console.WriteLine("\nnKey vale {0}", num);
-            } while (num != 48);
+                opt = (int)(Console.ReadKey().KeyChar);
+                Console.WriteLine("\nnKey vale {0}", opt);
+            } while (opt != 48);
             */
 
-            // (Array datum, string operation, int id = -1)
+            // (Array datum, string operation, int num = -1)
             /*
             double[] datam = new double[5] { 1, 2, 3, 4, 5 };
 

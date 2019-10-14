@@ -1,18 +1,26 @@
-[
-    {
-        "id" : "1",
-        "Operations" : [
-            {"Operation": "Sum", "calculation": "2+2+2=6", "Date": "2016-12-01T12:13:14Z"},
-            {"Operation": "Sum", "calculation": "2+2+2=6", "Date": "2016-12-01T12:13:14Z"}
-        ]
-    },
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:42:05.2392153Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:42.4059892Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:43.8379207Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:46.1399422Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:47.1870344Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:48.0150253Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:48.7969154Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:49.5858952Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:50.1450357Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:50.6840596Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:51.1710278Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:51.6109061Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:52.0469091Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:52.5068772Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:52.9159129Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T14:46:54.1969092Z"}}
 
-    {
-        "id" : "2",
-        "Operations" : [
-            {"Operation": "Sum", "calculation": "2+2+2=6", "Date": "2016-12-01T12:13:14Z"},
-            {"Operation": "Sum", "calculation": "2+2+2=6", "Date": "2016-12-01T12:13:14Z"}
-        ]
-    }
-
-]
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:31.1582277Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:34.4143309Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:39.3682071Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:40.8687379Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:42.2436521Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:43.6125678Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:44.9374858Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:46.1044133Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:47.2943405Z"}}

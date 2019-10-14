@@ -39,25 +39,20 @@ namespace server.Controllers
             }
 
             calc.Addens = server.ServerCalc.CleanArrayOfZeroValues(calc.Addens);
-            var fecha = DateTime.UtcNow;
-            fecha.ToString("o");
-            Console.WriteLine(fecha);
-
 
             AddResponse response = server.ServerCalc.AddingCalculation(calc.Addens);
-            // Query.Operations sum = Query.Operations.Sum;
-            // server.ServerCalc.writeQuery(id, Query.Operations.Sum, string.Join("+", calc.Addens) + "=" + response.Sum, fecha);
-            QueryResponse response2 = server.ServerCalc.readQuery(id);
 
             if (id != -1)
             {
+                var fecha = DateTime.UtcNow;
+                fecha.ToString("O");
+                Console.WriteLine(fecha);
                 // mandar a escribir la petición, donde al metodo le tendre que pasar la peticion 
+                Query addquery = new Query(Operations.Add, string.Join("+", calc.Addens) + "=" + response.Sum, fecha);
+                ServerCalc.writeQuery(id, addquery);
             }
 
-            return JsonConvert.SerializeObject(response,
-                new Newtonsoft.Json.Converters.StringEnumConverter());
-
-            //return JsonConvert.SerializeObject(response);
+            return JsonConvert.SerializeObject(response, new Newtonsoft.Json.Converters.StringEnumConverter());
         }
 
         // POST: Calculator/mult

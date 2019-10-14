@@ -5,8 +5,8 @@ using System.IO;
 using Newtonsoft.Json;
 
 using server.Models;
-
-
+using System.Web.Script.Serialization;
+using System.Linq;
 
 namespace server
 {
@@ -74,62 +74,57 @@ namespace server
             string folder = "Data"; // your code goes here
             // check if folder exist, and if dont he creates it
             // Directory.CreateDirectory(folder);
+            string currentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            string path2 = $@"..\..\Users\{currentUser}\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json";
+            string path3 = String.Format(@"..\..\Users\{0}\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json", currentUser);
+
             string path = @"C:\Users\Sergio\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json";
 
-            List<QueryResponse> items = new List<QueryResponse>();
+            List<Query> items = new List<Query>();
 
-            if (!File.Exists(path))
+            using (StreamReader streamReader = new StreamReader(path))
             {
-                File.Create(path);
-                TextWriter tw = new StreamWriter(path);
-                // tw.WriteLine("The very first line!");
-                tw.Close();
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+
+                    var item = JsonConvert.DeserializeObject<History>(line, new Newtonsoft.Json.Converters.StringEnumConverter());
+
+                    var test = new History(2, new Query(Query.Operations.Div, "test", DateTime.Now));
+                    var testSerialized = JsonConvert.SerializeObject(test);
+                    var testBack = JsonConvert.DeserializeObject<History>(testSerialized, new Newtonsoft.Json.Converters.StringEnumConverter());
+
+                    if (item != null && id == item.Id)
+                    {
+                        var query = new Query(item.Query);
+                        items.Add(query);
+                    }
+                }
             }
 
-            using (StreamReader r = new StreamReader(path))
-            {
-                string jsonstr = r.ReadToEnd();
-                items = JsonConvert.DeserializeObject<List<QueryResponse>>(jsonstr);
-            }
-
-
-
-            QueryResponse response = items[id];
+            QueryResponse response = new QueryResponse(id, items);
 
             return response;
         }
 
-        public static bool writeQuery(int id, Query.Operations calc, string calculation, DateTime Date)
+        public static void writeQuery(int id, Query query)
         {
-            Query query = new Query(calc, calculation, Date);
-            string folder = "Data"; // your code goes here
-            // check if folder exist, and if dont he creates it
-            Directory.CreateDirectory(folder);
-            string path = "Data/allquerys.json";
+            // comprobar si existe la carpeta y crearla
+            string path = String.Format(@"..\..\Users\{0}\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json", Environment.UserName);
 
-            List<QueryResponse> items = new List<QueryResponse>();
-
-            using (StreamReader r = new StreamReader(path))
+            if (id != -1)
             {
-                string jsonstr = r.ReadToEnd();
-                items = JsonConvert.DeserializeObject<List<QueryResponse>>(jsonstr);
-                // añades lo que vaya a escribir
-                // serializas y escribes otra vez
+                if (File.Exists(path))
+                {
+                    using (var writetext = new StreamWriter(path, true))
+                    {
+                        // escribir en el fichero
+                        var operation = JsonConvert.SerializeObject(new History(id, query), new Newtonsoft.Json.Converters.StringEnumConverter());
+                        writetext.WriteLine(operation);
+                    }
+                }
             }
-            // items[id].Operations = items[id].Operations + query;
-            List<Query> numberList = new List<Query>();
-            numberList.Add(items[id].Operations);
-            response2.Operations = response2.Operations + query;
 
-            string json = JsonConvert.SerializeObject(items[id]);
-            // check if file exist
-            // if dont, create it
-            // if exist, write in it
-            // check if exist the id
-            // if exist: get the values that it already had and add the new 
-            // if dont: agregar un nuevo id al dictionary y insertar los valores
-            return true;
-        }
-
-    } // class
+        } // class
+    }
 }

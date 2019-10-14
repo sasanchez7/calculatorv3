@@ -203,6 +203,7 @@
     <Compile Include="Models\AddRequest.cs" />
     <Compile Include="Models\DivRequest.cs" />
     <Compile Include="Models\DivResponse.cs" />
+    <Compile Include="Models\History.cs" />
     <Compile Include="Models\Query.cs" />
     <Compile Include="Models\QueryRequest.cs" />
     <Compile Include="Models\QueryResponse.cs" />

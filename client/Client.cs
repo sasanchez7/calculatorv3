@@ -152,6 +152,20 @@ namespace client
             SquareRootPetition(new SqrtRequest(number));
         }
 
+        public static void JournalQuery()
+        {
+            Console.Clear();
+            Console.WriteLine("JOURNAL QUERY");
+            int number;
+            string numberStr;
+            do
+            {
+                numberStr = AskForValue();
+            } while (!Int32.TryParse(numberStr, out number) && number == 0);
+            Console.WriteLine("\nCalculating, wait a second please\n");
+            JournalQueryPetition(new QueryRequest(number), number);
+        }
+
         /// <summary>
         /// This method recieves 2 parameters to create an http request  
         /// </summary>
@@ -380,6 +394,48 @@ namespace client
         } // class
         #endregion
 
+
+        public static void JournalQueryPetition(QueryRequest calc, int id)
+        {
+            try
+            {
+                var httpWebRequest = HeaderBuilder("Journal", "query", id);
+
+                string json = JsonConvert.SerializeObject(calc);
+
+                // send request
+                SendRequest(httpWebRequest, json);
+
+                // get response from the server
+                QueryResponse response = null;
+                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    response = JsonConvert.DeserializeObject<QueryResponse>(result);
+                }
+                /*
+                for (var i = 0; i < response.Operations.ToString().Length; i++)
+                {
+                    Console.Write("" + response.Operations.);
+                }
+                */
+                Console.WriteLine("Square: {0}", response.Operations + "\n\npress enter to continue.");
+                Console.ReadKey();
+            }
+            // handle error exceptions
+            catch (WebException webex)
+            {
+                WebResponse errResp = webex.Response;
+                using (Stream respStream = errResp.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(respStream);
+                    string text = reader.ReadToEnd();
+                }
+            }
+
+        } // class
 
     }
 }

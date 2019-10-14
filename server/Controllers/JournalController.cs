@@ -8,17 +8,17 @@ namespace server.Controllers
 {
     public class JournalController : Controller
     {
-        /*
-        // POST: Calculator/div
+
+        // POST: Journal/query
         [Route("Journal/query")]
         [Route("journal/query")]
         [HttpPost]
         [ActionName("query")]
         public string QueryPost(QueryRequest calc)
         {
-            // QueryResponse response = server.Server.GetOperationsById(calc.Id);
+            QueryResponse response = ServerCalc.readQuery(calc.Id);
             return JsonConvert.SerializeObject(response);
         }
-        */
+
     }
 }
