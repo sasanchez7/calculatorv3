@@ -50,12 +50,11 @@ namespace server
         {
             return new SqrtResponse(Math.Sqrt(number));
         }
-        /*
+
         public static QueryResponse GetOperationsById(int id)
         {
-            return new QueryResponse("dsf", "dfgs");
+            throw new NotImplementedException();
         }
-        */
 
         public static double[] CleanArrayOfZeroValues(double[] array)
         {
