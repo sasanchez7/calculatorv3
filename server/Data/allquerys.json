@@ -26,3 +26,7 @@
 {"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-14T15:28:47.2943405Z"}}
 {"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:28:35.8844291Z"}}
 {"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:29:31.6489815Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:43:03.8444356Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:50:15.3897318Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:57:01.345349Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5+5=20","Date":"2019-10-15T08:48:10.087779Z"}}

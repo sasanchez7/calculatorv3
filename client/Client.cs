@@ -96,7 +96,7 @@ namespace client
         {
             Console.Clear();
             Console.WriteLine("ADDITION");
-            /*
+
             List<double> valuesList = AskForTwoOrMoreValues();
             double[] values = new double[valuesList.Capacity];
             int i = 0;
@@ -105,9 +105,10 @@ namespace client
                 values[i++] = value;
             }
             AdditionPetition(new AddRequest(values), 1);
-            */
-            double[] values = { 5, 5, 5 };
-            AdditionPetition(new AddRequest(values), 1);
+
+            // quicktest
+            //double[] values = { 5, 5, 5 };
+            //AdditionPetition(new AddRequest(values), 1);
         }
         public static void Substraction()
         {
@@ -147,6 +148,10 @@ namespace client
             do
             {
                 numberStr = AskForValue();
+                if (!Double.TryParse(numberStr, out number))
+                {
+                    Console.WriteLine("\n Please, enter only numerical values\n");
+                }
             } while (!Double.TryParse(numberStr, out number) && number == 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
             SquareRootPetition(new SqrtRequest(number));
@@ -161,6 +166,10 @@ namespace client
             do
             {
                 numberStr = AskForValue();
+                if (!Int32.TryParse(numberStr, out number))
+                {
+                    Console.WriteLine("\n Please, enter only numerical values\n");
+                }
             } while (!Int32.TryParse(numberStr, out number) && number == 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
             JournalQueryPetition(new QueryRequest(number), number);
