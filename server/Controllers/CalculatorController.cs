@@ -28,15 +28,7 @@ namespace server.Controllers
         {
             // var total = calc.Addens.Sum();
             var headerRequest = this.Request.Headers;
-            int id = -1;
-            foreach (string key in headerRequest.AllKeys)
-            {
-                Console.WriteLine("\t{0}:{1}", key, headerRequest[key]);
-                if (key == "X-Evi-Tracking-Id")
-                {
-                    id = Int32.Parse(headerRequest[key]);
-                }
-            }
+            int id = ServerCalc.getIdHeader(headerRequest);
 
             calc.Addens = server.ServerCalc.CleanArrayOfZeroValues(calc.Addens);
 
@@ -46,8 +38,6 @@ namespace server.Controllers
             {
                 var fecha = DateTime.UtcNow;
                 fecha.ToString("O");
-                Console.WriteLine(fecha);
-                // mandar a escribir la petición, donde al metodo le tendre que pasar la peticion 
                 Query addquery = new Query(Operations.Add, string.Join("+", calc.Addens) + "=" + response.Sum, fecha);
                 ServerCalc.writeQuery(id, addquery);
             }
@@ -62,7 +52,19 @@ namespace server.Controllers
         [ActionName("mult")]
         public string MultPost(MultRequest calc)
         {
+            var headerRequest = this.Request.Headers;
+            int id = ServerCalc.getIdHeader(headerRequest);
+
             MultResponse response = server.ServerCalc.MultiplyingCalculation(calc.Factors);
+
+            if (id != -1)
+            {
+                var fecha = DateTime.UtcNow;
+                fecha.ToString("O");
+                Query addquery = new Query(Operations.Mult, string.Join("*", calc.Factors) + "=" + response.Product, fecha);
+                ServerCalc.writeQuery(id, addquery);
+            }
+
             return JsonConvert.SerializeObject(response);
         }
 
@@ -73,8 +75,20 @@ namespace server.Controllers
         [ActionName("sub")]
         public string SubPost(SubRequest calc)
         {
+            var headerRequest = this.Request.Headers;
+            int id = ServerCalc.getIdHeader(headerRequest);
+
             IEnumerable<SubResponse> someCollection = server.ServerCalc.SubtractingCalculation(calc.Minuend, calc.substrahend);
             var list = someCollection.Cast<SubResponse>().ToList();
+
+            if (id != -1)
+            {
+                var fecha = DateTime.UtcNow;
+                fecha.ToString("O");
+                Query addquery = new Query(Operations.Sub, $"{calc.Minuend}-{calc.substrahend}={list[0].Difference}", fecha);
+                ServerCalc.writeQuery(id, addquery);
+            }
+
             return JsonConvert.SerializeObject(list[0]);
         }
 
@@ -85,7 +99,19 @@ namespace server.Controllers
         [ActionName("div")]
         public string DivPost(DivRequest calc)
         {
+            var headerRequest = this.Request.Headers;
+            int id = ServerCalc.getIdHeader(headerRequest);
+
             var response = server.ServerCalc.DividingCalculation(calc.Dividend, calc.Divisor);
+
+            if (id != -1)
+            {
+                var fecha = DateTime.UtcNow;
+                fecha.ToString("O");
+                Query addquery = new Query(Operations.Div, $"{calc.Dividend}-{calc.Divisor}={response.Item1.Quotient}c-{response.Item1.Remainder}", fecha);
+                ServerCalc.writeQuery(id, addquery);
+            }
+
             return JsonConvert.SerializeObject(response.Item1);
         }
 
@@ -96,7 +122,19 @@ namespace server.Controllers
         [ActionName("sqrt")]
         public string SqrtPost(SqrtRequest calc)
         {
+            var headerRequest = this.Request.Headers;
+            int id = ServerCalc.getIdHeader(headerRequest);
+
             SqrtResponse response = server.ServerCalc.SquareRooCalculation(calc.Number);
+
+            if (id != -1)
+            {
+                var fecha = DateTime.UtcNow;
+                fecha.ToString("O");
+                Query addquery = new Query(Operations.Sqrt, $"√{calc.Number}={response.Square}", fecha);
+                ServerCalc.writeQuery(id, addquery);
+            }
+
             return JsonConvert.SerializeObject(response);
         }
 

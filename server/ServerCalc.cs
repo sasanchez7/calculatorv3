@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 using Newtonsoft.Json;
 
 using server.Models;
-using System.Web.Script.Serialization;
-using System.Linq;
+
 
 namespace server
 {
     public class ServerCalc
     {
+        public static string ROOT = Directory.GetCurrentDirectory();
         public static AddResponse AddingCalculation(double[] values)
         {
             double total = 0;
@@ -71,14 +72,7 @@ namespace server
 
         public static QueryResponse readQuery(int id)
         {
-            string folder = "Data"; // your code goes here
-            // check if folder exist, and if dont he creates it
-            // Directory.CreateDirectory(folder);
-            string currentUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            string path2 = $@"..\..\Users\{currentUser}\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json";
-            string path3 = String.Format(@"..\..\Users\{0}\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json", currentUser);
-
-            string path = @"C:\Users\Sergio\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json";
+            string path = String.Format(@"C:\Users\{0}\Documents\allquerys.json", Environment.UserName);
 
             List<Query> items = new List<Query>();
 
@@ -105,22 +99,31 @@ namespace server
 
         public static void writeQuery(int id, Query query)
         {
-            // comprobar si existe la carpeta y crearla
-            string path = String.Format(@"..\..\Users\{0}\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json", Environment.UserName);
+            string path = String.Format(@"C:\Users\{0}\Documents\allquerys.json", Environment.UserName);
 
             if (id != -1)
             {
-                if (File.Exists(path))
+                using (var writetext = new StreamWriter(path, true))
                 {
-                    using (var writetext = new StreamWriter(path, true))
-                    {
-                        // escribir en el fichero
-                        var operation = JsonConvert.SerializeObject(new History(id, query), new Newtonsoft.Json.Converters.StringEnumConverter());
-                        writetext.WriteLine(operation);
-                    }
+                    var operation = JsonConvert.SerializeObject(new History(id, query), new Newtonsoft.Json.Converters.StringEnumConverter());
+                    writetext.WriteLine(operation);
                 }
+
             }
 
         } // class
+
+        public static int getIdHeader(NameValueCollection headerRequest)
+        {
+            foreach (string key in headerRequest.AllKeys)
+            {
+                Console.WriteLine("\t{0}:{1}", key, headerRequest[key]);
+                if (key == "X-Evi-Tracking-Id")
+                {
+                    return Int32.Parse(headerRequest[key]);
+                }
+            }
+            return -1;
+        }
     }
 }

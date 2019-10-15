@@ -199,15 +199,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AddResponse.cs" />
     <Compile Include="Models\AddRequest.cs" />
+    <Compile Include="Models\AddResponse.cs" />
     <Compile Include="Models\DivRequest.cs" />
     <Compile Include="Models\DivResponse.cs" />
     <Compile Include="Models\History.cs" />
+    <Compile Include="Models\MultRequest.cs" />
     <Compile Include="Models\Query.cs" />
     <Compile Include="Models\QueryRequest.cs" />
     <Compile Include="Models\QueryResponse.cs" />
-    <Compile Include="Models\MultRequest.cs" />
     <Compile Include="Models\MultResponse.cs" />
     <Compile Include="Models\SqrtRequest.cs" />
     <Compile Include="Models\SqrtResponse.cs" />

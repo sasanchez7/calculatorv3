@@ -34,38 +34,60 @@ namespace client
             return false;
         }
 
-        public static int SignUp()
+        public static void SignUp()
         {
-            Console.Clear();
-            Console.WriteLine("SIGN UP");
-            int number;
+
+            Console.WriteLine("\n\nSIGN UP");
+            int id;
             string numberStr;
             do
             {
                 numberStr = AskForValue();
 
-                if (!Int32.TryParse(numberStr, out number))
+                if (!Int32.TryParse(numberStr, out id))
                     Console.WriteLine("\n Please, enter only numerical values\n");
 
-            } while (!Int32.TryParse(numberStr, out number) && number == -1);
-            Console.WriteLine("\nCalculating, wait a second please\n");
+            } while (!Int32.TryParse(numberStr, out id) && id == -1);
+            Console.WriteLine("\nchecking whether the ID entered can be assigned...\n");
             // call sign up function that
             // check if id exits that if
-            // doesnt exist, let me sign up and keep going with the program
-            // does exist, tell him to ask another id or exit
-
-
-            return 5;
+            if (idExists(id))
+            {
+                // does exist, tell him to ask another id or exit 
+                Console.WriteLine("\nthis number exist, please introduce another one\n");
+                SignUp();
+            }
+            else
+                // doesnt exist, let me sign up and keep going with the program
+                Program.id = id;
         }
 
-        public static int signIn()
+        public static void SignIn()
         {
-            // call sign in function that
-            // check if id exits that if
-            // doesnt exist, ask for a id again or exit
-            // does exist, sign in
 
-            return 5;
+            Console.WriteLine("\n\nSIGN IN");
+            int id;
+            string numberStr;
+            do
+            {
+                numberStr = AskForValue();
+
+                if (!Int32.TryParse(numberStr, out id))
+                    Console.WriteLine("\n Please, enter only numerical values\n");
+
+            } while (!Int32.TryParse(numberStr, out id) && id == -1);
+            Console.WriteLine("\nchecking if you can login with that ID...\n");
+
+            // check if id exits that if
+            if (idExists(id))
+                // does exist, sign in 
+                Program.id = id;
+            else
+            {
+                // doesnt exist, ask for a id again or exit
+                Console.WriteLine("\nthis number doesnt exist, please introduce another one that does\n");
+                SignIn();
+            }
         }
 
         public static string AskForValue()
@@ -149,54 +171,45 @@ namespace client
             return values;
         }
 
-        public static void Addition()
+        public static void Addition(int id)
         {
             Console.Clear();
             Console.WriteLine("ADDITION");
 
             List<double> valuesList = AskForTwoOrMoreValues();
-            double[] values = new double[valuesList.Capacity];
-            int i = 0;
-            foreach (int value in valuesList)
-            {
-                values[i++] = value;
-            }
-            AdditionPetition(new AddRequest(values), 1);
+            double[] values = valuesList.ToArray();
+
+            AdditionPetition(new AddRequest(values), id);
 
             // quicktest
             // double[] values = { 5, 5, 5 };
             // AdditionPetition(new AddRequest(values), 1);
         }
-        public static void Substraction()
+        public static void Substraction(int id)
         {
             Console.Clear();
             Console.WriteLine("SUBSTRACTION");
             Double[] values = AskForJustTwoValues();
-            SubtractionPetition(new SubRequest(values[0], values[1]));
+            SubtractionPetition(new SubRequest(values[0], values[1]), id);
         }
-        public static void Multiplication()
+        public static void Multiplication(int id)
         {
             Console.Clear();
             Console.WriteLine("MULTIPLICATION");
             List<double> valuesList = AskForTwoOrMoreValues();
-            double[] values = new double[valuesList.Count];
-            int i = 0;
-            foreach (int value in valuesList)
-            {
-                values[i++] = value;
-            }
-            MultiplicationPetition(new MultRequest(values));
+            double[] values = valuesList.ToArray();
+            MultiplicationPetition(new MultRequest(values), id);
 
         }
-        public static void Division()
+        public static void Division(int id)
         {
             Console.Clear();
             Console.WriteLine("DIVISION");
             Double[] values = AskForJustTwoValues();
-            DivisionPetition(new DivRequest(values[0], values[1]));
+            DivisionPetition(new DivRequest(values[0], values[1]), id);
 
         }
-        public static void SquareRoot()
+        public static void SquareRoot(int id)
         {
             Console.Clear();
             Console.WriteLine("SQUARE ROOT");
@@ -211,7 +224,7 @@ namespace client
 
             } while (!Double.TryParse(numberStr, out number) && number == 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
-            SquareRootPetition(new SqrtRequest(number));
+            SquareRootPetition(new SqrtRequest(number), id);
         }
 
         public static void JournalQuery()
@@ -237,6 +250,7 @@ namespace client
         /// </summary>
         public static void SendRequest(HttpWebRequest httpWebRequest, string ObjSerialized)
         {
+            httpWebRequest.ContentLength = ObjSerialized.Length;
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 streamWriter.Write(ObjSerialized);
@@ -247,7 +261,7 @@ namespace client
         /// <summary>
         /// This method recieves 2 parameters to build a http header 
         /// </summary>
-        public static HttpWebRequest HeaderBuilder(string controller, string action, int id = -1)
+        public static HttpWebRequest HeaderBuilder(string controller, string action, int id)
         {
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55555/" + controller + "/" + action);
             httpWebRequest.ProtocolVersion = HttpVersion.Version11; // could fail
@@ -261,7 +275,7 @@ namespace client
         }
 
         #region method_AddingPetition
-        public static void AdditionPetition(AddRequest calc, int id = -1)
+        public static void AdditionPetition(AddRequest calc, int id)
         {
             try
             {
@@ -293,6 +307,7 @@ namespace client
                 {
                     StreamReader reader = new StreamReader(respStream);
                     string text = reader.ReadToEnd();
+                    Console.WriteLine(text);
                 }
             }
 
@@ -300,7 +315,7 @@ namespace client
         #endregion
 
         #region method_MultiplicationPetition
-        public static void MultiplicationPetition(MultRequest calc, int id = -1)
+        public static void MultiplicationPetition(MultRequest calc, int id)
         {
             try
             {
@@ -339,7 +354,7 @@ namespace client
         #endregion
 
         #region method_SubtractionPetition
-        public static void SubtractionPetition(SubRequest calc, int id = -1)
+        public static void SubtractionPetition(SubRequest calc, int id)
         {
             try
             {
@@ -382,7 +397,7 @@ namespace client
         #endregion
 
         #region method_DivisionPetition
-        public static void DivisionPetition(DivRequest calc, int id = -1)
+        public static void DivisionPetition(DivRequest calc, int id)
         {
             try
             {
@@ -422,7 +437,7 @@ namespace client
         #endregion
 
         #region method_SquareRootPetition
-        public static void SquareRootPetition(SqrtRequest calc, int id = -1)
+        public static void SquareRootPetition(SqrtRequest calc, int id)
         {
             try
             {
@@ -481,13 +496,12 @@ namespace client
                     var result = streamReader.ReadToEnd();
                     response = JsonConvert.DeserializeObject<QueryResponse>(result);
                 }
-                /*
-                for (var i = 0; i < response.Operations.ToString().Length; i++)
+                Console.WriteLine("Type of calc; Operation; Date;");
+                foreach (Query qry in response.Operations)
                 {
-                    Console.Write("" + response.Operations.);
+                    Console.WriteLine($"{qry.Calculation} | {qry.Operation} | {qry.Date}");
                 }
-                */
-                Console.WriteLine("Square: {0}", response.Operations + "\n\npress enter to continue.");
+                Console.WriteLine("\n\npress enter to continue.");
                 Console.ReadKey();
             }
             // handle error exceptions

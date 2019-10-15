@@ -17,9 +17,27 @@ namespace client.Models
             Sqrt = 5
         }
 
-        public Operations Operation { get; private set; }
-        public string Calculation { get; private set; }
-        public DateTime Date { get; private set; }
+        public Operations Operation { get; set; }
+        public string Calculation { get; set; }
+        public DateTime Date { get; set; }
+
+        public Query()
+        {
+        }
+
+        public Query(Operations Operation, string calculation, DateTime Date)
+        {
+            this.Operation = Operation;
+            this.Calculation = calculation;
+            this.Date = Date;
+        }
+
+        public Query(Query query)
+        {
+            this.Operation = query.Operation;
+            this.Calculation = query.Calculation;
+            this.Date = query.Date;
+        }
 
     }
 }

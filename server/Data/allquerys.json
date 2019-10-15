@@ -30,3 +30,9 @@
 {"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:50:15.3897318Z"}}
 {"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5=15","Date":"2019-10-15T07:57:01.345349Z"}}
 {"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5+5=20","Date":"2019-10-15T08:48:10.087779Z"}}
+{"Id":4,"Query":{"Operation":"Add","Calculation":"5+4+3=12","Date":"2019-10-15T12:10:12.6197339Z"}}
+{"Id":1,"Query":{"Operation":"Add","Calculation":"5+5+5+5+5+5+5+5+5+5=50","Date":"2019-10-15T12:23:38.1671386Z"}}
+{"Id":3,"Query":{"Operation":"Sub","Calculation":"8-4=4","Date":"2019-10-15T13:55:36.7753772Z"}}
+{"Id":3,"Query":{"Operation":"Mult","Calculation":"5*3*5=75","Date":"2019-10-15T13:55:45.0058615Z"}}
+{"Id":2,"Query":{"Operation":"Div","Calculation":"6-3=2c-0","Date":"2019-10-15T13:59:08.7252738Z"}}
+{"Id":6,"Query":{"Operation":"Sqrt","Calculation":"√4=2","Date":"2019-10-15T14:09:06.6557419Z"}}

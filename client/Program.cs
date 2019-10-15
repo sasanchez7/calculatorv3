@@ -1,5 +1,4 @@
-﻿using client.Models;
-using System;
+﻿using System;
 
 namespace client
 {
@@ -14,6 +13,7 @@ namespace client
             // add, sub, mult, div, sqrt, query, exit
             int num = -1;
             int opt = 0;
+            Console.WriteLine();
             Console.Title = "CalculatorService by SrG";
             Console.WriteLine("Welcome and greetings \n");
             do
@@ -37,29 +37,28 @@ namespace client
                     Console.Clear();
                     Console.WriteLine("\nPlease, introduce one of the following\n");
                 }
+            } while (num < 0 && 3 < num);
 
-                switch (opt)
-                {
-                    case 0:
-                        //i tried to kill the proccess to stop execution
-                        break;
-                    case 1:
-                        id = Client.SignUp();
-                        break;
-                    case 2:
-                        id = Client.signIn();
-                        break;
-                    case 3:
-                        // sign as guest
-                        id = -1;
-                        break;
-                    default:
-                        Console.Clear();
-                        Console.WriteLine("\n\nPlease, introduce one of the following\n");
-                        break;
-                }
-
-            } while (num < 0 || num > 3);
+            switch (num)
+            {
+                case 0:
+                    //i tried to kill the proccess to stop execution
+                    break;
+                case 1:
+                    Client.SignUp();
+                    break;
+                case 2:
+                    Client.SignIn();
+                    break;
+                case 3:
+                    // sign as guest
+                    id = -1;
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("\n\nPlease, introduce one of the following\n");
+                    break;
+            }
 
             do
             {
@@ -81,8 +80,6 @@ namespace client
                     opt = int.Parse(UserInput.KeyChar.ToString()); // use Parse if it's a Digit
                 }
 
-                Console.WriteLine("\nnKey vale {0}\n", opt);
-
                 switch (opt)
                 {
                     case 0:
@@ -90,23 +87,23 @@ namespace client
                         break;
                     case 1:
                         // ask for 2 or + double values
-                        Client.Addition();
+                        Client.Addition(id);
                         break;
                     case 2:
                         // ask just for 2 double values
-                        Client.Substraction();
+                        Client.Substraction(id);
                         break;
                     case 3:
                         // ask for 2 or + double values
-                        Client.Multiplication();
+                        Client.Multiplication(id);
                         break;
                     case 4:
                         // ask just for 2 double values
-                        Client.Division();
+                        Client.Division(id);
                         break;
                     case 5:
                         // ask just for 1 double value
-                        Client.SquareRoot();
+                        Client.SquareRoot(id);
                         break;
                     case 6:
                         // ask just for 1 int value
