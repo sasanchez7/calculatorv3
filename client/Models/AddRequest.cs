@@ -8,9 +8,5 @@
         {
             this.Addens = Addens;
         }
-
-        public AddRequest()
-        {
-        }
     }
 }

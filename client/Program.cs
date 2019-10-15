@@ -5,18 +5,14 @@ namespace client
 {
     class Program
     {
-        public static int num = -1;
-
-        public static int singingAs(int num)
-        {
-            return num;
-        }
+        public static int id = -1;
 
         public static void MainMenu()
         {
             // if the program start, create a file
             // what you want
             // add, sub, mult, div, sqrt, query, exit
+            int num = -1;
             int opt = 0;
             Console.Title = "CalculatorService by SrG";
             Console.WriteLine("Welcome and greetings \n");
@@ -40,6 +36,27 @@ namespace client
                 {
                     Console.Clear();
                     Console.WriteLine("\nPlease, introduce one of the following\n");
+                }
+
+                switch (opt)
+                {
+                    case 0:
+                        //i tried to kill the proccess to stop execution
+                        break;
+                    case 1:
+                        id = Client.SignUp();
+                        break;
+                    case 2:
+                        id = Client.signIn();
+                        break;
+                    case 3:
+                        // sign as guest
+                        id = -1;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("\n\nPlease, introduce one of the following\n");
+                        break;
                 }
 
             } while (num < 0 || num > 3);

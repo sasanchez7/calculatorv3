@@ -11,6 +11,63 @@ namespace client
 {
     public class Client
     {
+        public static bool idExists(int id)
+        {
+            string path = @"C:\Users\Sergio\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json";
+
+            List<Query> items = new List<Query>();
+
+            using (StreamReader streamReader = new StreamReader(path))
+            {
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+
+                    var item = JsonConvert.DeserializeObject<History>(line, new Newtonsoft.Json.Converters.StringEnumConverter());
+
+                    if (item != null && id == item.Id)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static int SignUp()
+        {
+            Console.Clear();
+            Console.WriteLine("SIGN UP");
+            int number;
+            string numberStr;
+            do
+            {
+                numberStr = AskForValue();
+
+                if (!Int32.TryParse(numberStr, out number))
+                    Console.WriteLine("\n Please, enter only numerical values\n");
+
+            } while (!Int32.TryParse(numberStr, out number) && number == -1);
+            Console.WriteLine("\nCalculating, wait a second please\n");
+            // call sign up function that
+            // check if id exits that if
+            // doesnt exist, let me sign up and keep going with the program
+            // does exist, tell him to ask another id or exit
+
+
+            return 5;
+        }
+
+        public static int signIn()
+        {
+            // call sign in function that
+            // check if id exits that if
+            // doesnt exist, ask for a id again or exit
+            // does exist, sign in
+
+            return 5;
+        }
+
         public static string AskForValue()
         {
             Console.Write("Enter the number that you want:");
@@ -107,8 +164,8 @@ namespace client
             AdditionPetition(new AddRequest(values), 1);
 
             // quicktest
-            //double[] values = { 5, 5, 5 };
-            //AdditionPetition(new AddRequest(values), 1);
+            // double[] values = { 5, 5, 5 };
+            // AdditionPetition(new AddRequest(values), 1);
         }
         public static void Substraction()
         {
@@ -148,10 +205,10 @@ namespace client
             do
             {
                 numberStr = AskForValue();
+
                 if (!Double.TryParse(numberStr, out number))
-                {
                     Console.WriteLine("\n Please, enter only numerical values\n");
-                }
+
             } while (!Double.TryParse(numberStr, out number) && number == 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
             SquareRootPetition(new SqrtRequest(number));
@@ -166,10 +223,10 @@ namespace client
             do
             {
                 numberStr = AskForValue();
+
                 if (!Int32.TryParse(numberStr, out number))
-                {
                     Console.WriteLine("\n Please, enter only numerical values\n");
-                }
+
             } while (!Int32.TryParse(numberStr, out number) && number == 0);
             Console.WriteLine("\nCalculating, wait a second please\n");
             JournalQueryPetition(new QueryRequest(number), number);

@@ -68,6 +68,7 @@ namespace server
             return listOfNumbers.ToArray();
         }
 
+
         public static QueryResponse readQuery(int id)
         {
             string folder = "Data"; // your code goes here
@@ -88,10 +89,6 @@ namespace server
                 {
 
                     var item = JsonConvert.DeserializeObject<History>(line, new Newtonsoft.Json.Converters.StringEnumConverter());
-
-                    var test = new History(2, new Query(Query.Operations.Div, "test", DateTime.Now));
-                    var testSerialized = JsonConvert.SerializeObject(test);
-                    var testBack = JsonConvert.DeserializeObject<History>(testSerialized, new Newtonsoft.Json.Converters.StringEnumConverter());
 
                     if (item != null && id == item.Id)
                     {

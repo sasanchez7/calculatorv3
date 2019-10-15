@@ -10,9 +10,5 @@
             this.Minuend = Minuend;
             this.substrahend = substrahend;
         }
-
-        public SubRequest()
-        {
-        }
     }
 }

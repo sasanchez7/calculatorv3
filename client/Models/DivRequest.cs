@@ -10,9 +10,5 @@
             this.Dividend = Dividend;
             this.Divisor = Divisor;
         }
-
-        public DivRequest()
-        {
-        }
     }
 }
