@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Net; // to use HttpWebRequest
+using System.Net;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
@@ -53,16 +53,13 @@ namespace client
 
             } while (!Int32.TryParse(numberStr, out id) && id == -1);
             Console.WriteLine("\nchecking whether the ID entered can be assigned...\n");
-            // call sign up function that
-            // check if id exits that if
+
             if (idExists(id))
             {
-                // does exist, tell him to ask another id or exit 
                 Console.WriteLine("\nthis number exist, please introduce another one\n");
                 SignUp();
             }
             else
-                // doesnt exist, let me sign up and keep going with the program
                 Program.id = id;
         }
 
@@ -84,11 +81,9 @@ namespace client
             Console.WriteLine("\nchecking if you can login with that ID...\n");
             if (id == 0) Program.MainMenu();
 
-            // check if id exits that if
-            if (idExists(id)) Program.id = id; // does exist, sign in 
+            if (idExists(id)) Program.id = id;
             else
             {
-                // doesnt exist, ask for a id again or exit
                 Console.WriteLine("\nthis number doesnt exist, please introduce another one that does\n");
                 SignIn();
             }
@@ -113,7 +108,6 @@ namespace client
                     double number;
                     if (Double.TryParse(numberStr, out number))
                     {
-                        // Console.WriteLine("'{0}' --> {1}", numberStr, number);
                         if (number > 0)
                         {
                             twoValues[i] = number;
@@ -145,11 +139,9 @@ namespace client
                 fail = false;
                 Console.Write("Enter parameters that you want to calculate: ");
                 string numberStr = Console.ReadLine();
-                // string numberStr = "5";
 
                 if (Double.TryParse(numberStr, out number))
                 {
-                    // Console.WriteLine("'{0}' --> {1}", numberStr, number);
                     fail = false;
                     if (number > 0)
                     {
@@ -184,10 +176,6 @@ namespace client
             double[] values = valuesList.ToArray();
 
             AdditionPetition(new AddRequest(values), id);
-
-            // quicktest
-            // double[] values = { 5, 5, 5 };
-            // AdditionPetition(new AddRequest(values), 1);
         }
         public static void Substraction(int id)
         {
@@ -287,12 +275,9 @@ namespace client
 
                 string json = JsonConvert.SerializeObject(calc);
 
-                // send request
                 SendRequest(httpWebRequest, json);
 
-                // get response from the server
                 AddResponse response = null;
-                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -303,7 +288,6 @@ namespace client
                 Console.WriteLine("Sum: " + response.Sum + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
-            // handle error exceptions
             catch (WebException webex)
             {
                 WebResponse errResp = webex.Response;
@@ -327,12 +311,9 @@ namespace client
 
                 string json = JsonConvert.SerializeObject(calc);
 
-                // send request
                 SendRequest(httpWebRequest, json);
 
-                // get response from the server
                 MultResponse response = null;
-                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -343,7 +324,6 @@ namespace client
                 Console.WriteLine("Product: " + response.Product + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
-            // handle error exceptions
             catch (WebException webex)
             {
                 WebResponse errResp = webex.Response;
@@ -362,31 +342,23 @@ namespace client
         {
             try
             {
-                // change
                 var httpWebRequest = HeaderBuilder("Calculator", "sub", id);
 
                 string json = JsonConvert.SerializeObject(calc);
 
-                // send request
                 SendRequest(httpWebRequest, json);
 
-                // get response from the server
-                // change
                 SubResponse response = null;
-                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
-                    // change
                     response = JsonConvert.DeserializeObject<SubResponse>(result);
                 }
 
-                // change
                 Console.WriteLine("Difference: " + response.Difference + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
-            // handle error exceptions
             catch (WebException webex)
             {
                 WebResponse errResp = webex.Response;
@@ -409,12 +381,9 @@ namespace client
 
                 string json = JsonConvert.SerializeObject(calc);
 
-                // send request
                 SendRequest(httpWebRequest, json);
 
-                // get response from the server
                 DivResponse response = null;
-                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -449,12 +418,9 @@ namespace client
 
                 string json = JsonConvert.SerializeObject(calc);
 
-                // send request
                 SendRequest(httpWebRequest, json);
 
-                // get response from the server
                 SqrtResponse response = null;
-                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -465,7 +431,6 @@ namespace client
                 Console.WriteLine("Square: {0}", response.Square + "\n\npress enter to continue.");
                 Console.ReadKey();
             }
-            // handle error exceptions
             catch (WebException webex)
             {
                 WebResponse errResp = webex.Response;
@@ -488,12 +453,9 @@ namespace client
 
                 string json = JsonConvert.SerializeObject(calc);
 
-                // send request
                 SendRequest(httpWebRequest, json);
 
-                // get response from the server
                 QueryResponse response = null;
-                // var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {

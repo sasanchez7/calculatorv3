@@ -12,13 +12,6 @@ namespace server.Controllers
 {
     public class CalculatorController : Controller
     {
-        // POST: calculator/add
-        [HttpGet]
-        public string Add()
-        {
-            return "<h1>add get</h1>";
-        }
-
         // POST: Calculator/add
         [Route("Calculator/add")]
         [Route("calculator/add")]
@@ -26,7 +19,6 @@ namespace server.Controllers
         [ActionName("add")]
         public string AddPost(AddRequest calc)
         {
-            // var total = calc.Addens.Sum();
             var headerRequest = this.Request.Headers;
             int id = ServerCalc.getIdHeader(headerRequest);
 
@@ -136,6 +128,13 @@ namespace server.Controllers
             }
 
             return JsonConvert.SerializeObject(response);
+        }
+
+        // GET: calculator/add
+        [HttpGet]
+        public string Add()
+        {
+            return "<h1>add get</h1>";
         }
 
     }

@@ -18,7 +18,6 @@ namespace client
             Console.WriteLine("Welcome and greetings \n");
             do
             {
-                // sign up, sign in or guest 
                 Console.WriteLine("What you want to do?");
                 Console.WriteLine("0 - Exit");
                 Console.WriteLine("1 - Sign up");
@@ -42,7 +41,7 @@ namespace client
             switch (num)
             {
                 case 0:
-                    //i tried to kill the proccess to stop execution
+
                     break;
                 case 1:
                     Client.SignUp();
@@ -71,7 +70,6 @@ namespace client
                 Console.WriteLine("4 - Division");
                 Console.WriteLine("5 - Square root");
                 Console.WriteLine("6 - Journal query\n");
-                // (int)(Console.ReadKey().KeyChar);
 
                 ConsoleKeyInfo UserInput = Console.ReadKey(); // Get user input
                                                               // We check input for a Digit
@@ -83,30 +81,23 @@ namespace client
                 switch (opt)
                 {
                     case 0:
-                        //i tried to kill the proccess to stop execution
                         break;
                     case 1:
-                        // ask for 2 or + double values
                         Client.Addition(id);
                         break;
                     case 2:
-                        // ask just for 2 double values
                         Client.Substraction(id);
                         break;
                     case 3:
-                        // ask for 2 or + double values
                         Client.Multiplication(id);
                         break;
                     case 4:
-                        // ask just for 2 double values
                         Client.Division(id);
                         break;
                     case 5:
-                        // ask just for 1 double value
                         Client.SquareRoot(id);
                         break;
                     case 6:
-                        // ask just for 1 int value
                         Client.JournalQuery();
                         break;
                     default:

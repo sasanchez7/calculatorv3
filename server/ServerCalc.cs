@@ -37,8 +37,6 @@ namespace server
         {
             var e2 = new List<SubResponse>();
             e2.Add(new SubResponse(minuend - substrahend));
-            // you can add as much as you want
-            //e2.Add(new SubResponse(minuend - substrahend));
             return e2;
         }
 
