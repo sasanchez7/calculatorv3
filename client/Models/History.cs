@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace client.Models
+﻿namespace client.Models
 {
     public class History
     {

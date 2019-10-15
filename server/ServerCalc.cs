@@ -76,6 +76,11 @@ namespace server
 
             List<Query> items = new List<Query>();
 
+            if (!File.Exists(path))
+            {
+                using (var stream = File.Create(path)) { }
+            }
+
             using (StreamReader streamReader = new StreamReader(path))
             {
                 string line;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace client
 {
@@ -8,9 +9,8 @@ namespace client
 
         public static void MainMenu()
         {
-            // if the program start, create a file
-            // what you want
-            // add, sub, mult, div, sqrt, query, exit
+            string path = String.Format(@"C:\Users\{0}\Documents\allquerys.json", Environment.UserName);
+            File.Delete(path);
             int num = -1;
             int opt = 0;
             Console.WriteLine();
@@ -116,9 +116,6 @@ namespace client
                 }
 
             } while (opt != 0);
-
-
-            // if exit, destroy all num files
         }
 
         static void Main(string[] args)

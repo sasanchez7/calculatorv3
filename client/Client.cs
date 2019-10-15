@@ -13,9 +13,13 @@ namespace client
     {
         public static bool idExists(int id)
         {
-            string path = @"C:\Users\Sergio\Documents\Visual Studio 2015\Projects\CalculatorV3\server\Data\allquerys.json";
+            string path = String.Format(@"C:\Users\{0}\Documents\allquerys.json", Environment.UserName);
 
             List<Query> items = new List<Query>();
+            if (!File.Exists(path))
+            {
+                using (var stream = File.Create(path)) { }
+            }
 
             using (StreamReader streamReader = new StreamReader(path))
             {
@@ -66,6 +70,7 @@ namespace client
         {
 
             Console.WriteLine("\n\nSIGN IN");
+            Console.WriteLine("\nREMINDER: Enter 0 if u wont sign in\n");
             int id;
             string numberStr;
             do
@@ -77,11 +82,10 @@ namespace client
 
             } while (!Int32.TryParse(numberStr, out id) && id == -1);
             Console.WriteLine("\nchecking if you can login with that ID...\n");
+            if (id == 0) Program.MainMenu();
 
             // check if id exits that if
-            if (idExists(id))
-                // does exist, sign in 
-                Program.id = id;
+            if (idExists(id)) Program.id = id; // does exist, sign in 
             else
             {
                 // doesnt exist, ask for a id again or exit
