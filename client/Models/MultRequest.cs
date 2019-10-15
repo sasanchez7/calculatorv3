@@ -8,5 +8,9 @@
         {
             this.Factors = Factors;
         }
+
+        public MultRequest()
+        {
+        }
     }
 }

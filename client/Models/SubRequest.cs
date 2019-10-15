@@ -11,5 +11,8 @@
             this.substrahend = substrahend;
         }
 
+        public SubRequest()
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using client.Models;
+using System;
 
 namespace client
 {
@@ -97,49 +98,50 @@ namespace client
         static void Main(string[] args)
         {
             MainMenu();
-            /*
-            int opt = 0;
-            do
+            if (false)
             {
-                Console.WriteLine("Introduce numero \n");
-                opt = (int)(Console.ReadKey().KeyChar);
-                Console.WriteLine("\nnKey vale {0}", opt);
-            } while (opt != 48);
-            */
+                int opt = 0;
+                do
+                {
+                    Console.WriteLine("Introduce numero \n");
+                    opt = (int)(Console.ReadKey().KeyChar);
+                    Console.WriteLine("\nnKey vale {0}", opt);
+                } while (opt != 48);
 
-            // (Array datum, string operation, int num = -1)
-            /*
-            double[] datam = new double[5] { 1, 2, 3, 4, 5 };
 
-            AddRequest add = new AddRequest()
-            {
-                Addens = datam
-            };
-            Client.AdditionPetition(add, 5);
+                // (Array datum, string operation, int num = -1)
 
-            MultRequest mult = new MultRequest()
-            {
-                Factors = datam
-            };
-            Client.MultiplicationPetition(mult, 5);
+                double[] datam = new double[5] { 1, 2, 3, 4, 5 };
 
-            SubRequest sub = new SubRequest()
-            {
-                Minuend = 5.5,
-                substrahend = 2.5
-            };
-            Client.SubtractionPetition(sub, 5);
+                AddRequest add = new AddRequest()
+                {
+                    Addens = datam
+                };
+                Client.AdditionPetition(add, 5);
 
-            DivRequest div = new DivRequest()
-            {
-                Dividend = 7.1,
-                Divisor = 3.5
-            };
-            Client.DivisionPetition(div, 5);
+                MultRequest mult = new MultRequest()
+                {
+                    Factors = datam
+                };
+                Client.MultiplicationPetition(mult, 5);
 
-            //Console.ReadKey();
+                SubRequest sub = new SubRequest()
+                {
+                    Minuend = 5.5,
+                    substrahend = 2.5
+                };
+                Client.SubtractionPetition(sub, 5);
 
-        */
+                DivRequest div = new DivRequest()
+                {
+                    Dividend = 7.1,
+                    Divisor = 3.5
+                };
+                Client.DivisionPetition(div, 5);
+
+                //Console.ReadKey();
+            }
+
 
 
         }
